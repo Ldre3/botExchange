@@ -7,6 +7,7 @@ package botpls;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -29,7 +30,7 @@ public class api {
                 .build();
         HttpResponse <String> response = httpClient.send(request, BodyHandlers.ofString());
         Respuesta rate = gson.fromJson(response.body(), Respuesta.class);
-        return rate.getRate().get(to).multiply(BigDecimal.valueOf(dinero));
+        return rate.getRate().get(to).multiply(BigDecimal.valueOf(dinero)).setScale(2, RoundingMode.HALF_UP);
         
     }
 }

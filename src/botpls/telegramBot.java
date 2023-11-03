@@ -28,7 +28,11 @@ public class telegramBot extends TelegramLongPollingBot {
         String [] partido = message_text.split(" ");
         String mensaje = "";
         try {
-            mensaje = String.valueOf(api.conversion(partido[1], partido[2],Double.parseDouble(partido[0])));
+            double cantidad = Double.parseDouble(partido[0]);
+            String from = partido[1];
+            final String to = partido[2];
+            mensaje = String.valueOf(api.conversion(from, to, cantidad));
+            mensaje = cantidad + from +" = "+mensaje+to;
         } catch (URISyntaxException ex) {
             Logger.getLogger(telegramBot.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
