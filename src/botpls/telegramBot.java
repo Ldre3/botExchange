@@ -23,7 +23,6 @@ public class telegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         // We check if the update has a message and the message has text
     if (update.hasMessage() && update.getMessage().hasText()) {
-        // Set variables
         String message_text = update.getMessage().getText();
         String [] partido = message_text.split(" ");
         String mensaje = "";
@@ -43,11 +42,11 @@ public class telegramBot extends TelegramLongPollingBot {
         long chat_id = update.getMessage().getChatId();
 
         SendMessage message = new SendMessage();
-        message.setChatId(chat_id);// Create a message object object
+        message.setChatId(chat_id);
         message.setText(mensaje);
                 
         try {
-            execute(message); // Sending our message object to user
+            execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

@@ -21,6 +21,7 @@ import java.net.http.HttpResponse.BodyHandlers;
  */
 public class api {
     public static BigDecimal conversion(String from, String to, double dinero) throws URISyntaxException, IOException, InterruptedException{
+        // Generamos el link con los datos
         String link = "https://api.freecurrencyapi.com/v1/latest?base_currency="+from+"&currencies="+to;
         Gson gson = new Gson();
         HttpClient httpClient = HttpClient.newHttpClient();
@@ -28,8 +29,10 @@ public class api {
                 .uri(new URI(link))
                 .header("apikey","fca_live_fHgTErOzzFajHW32zg2xsUdMzDWQIBS4tE0kMFx5")
                 .build();
+        // Respuesta al json
         HttpResponse <String> response = httpClient.send(request, BodyHandlers.ofString());
         Respuesta rate = gson.fromJson(response.body(), Respuesta.class);
+        // Sacamos el dato del mapa y lo devolvemos multiplicado y redondeado
         return rate.getRate().get(to).multiply(BigDecimal.valueOf(dinero)).setScale(2, RoundingMode.HALF_UP);
         
     }
